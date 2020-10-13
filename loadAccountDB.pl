@@ -11,7 +11,8 @@ while(<STDIN>) {
   ($acct_number,$mrn,$last_name,$first_name,$m,$d,$y,$time) = split(/,/);
   $m = "0"  . $m if $m < 10;
   $d = "0"  . $d if $d < 10;
-  $y = "20" . $y;
+  $y = "200" . $y if (length $y == 1);
+  $y = "20"  . $y if (length $y == 2);
   chomp($time);
   $time = "000" . $time if (length $time == 1);
   $time = "00" . $time if (length $time == 2);
