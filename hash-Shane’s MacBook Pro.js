@@ -14,4 +14,4 @@ function stringToHash(string) {
 var value = "12345678901234567890";
 console.log("Value is " + value);
 console.log(stringToHash(value));
-
+console.log(DateUtil.getCurrentDate("YYYYMMDD-hhmmss"));
