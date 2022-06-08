@@ -1,0 +1,17 @@
+#Creates the libconfig format configuration file
+#$gtm_dist/mumps -r CONVDBKEYS $gtmcrypt_config
+echo "tls: {">$gtmcrypt_config
+echo " verify-depth: 7;" >> $gtmcrypt_config
+echo "    CAfile: \"$PWD/certs/ca.crt\";" >> $gtmcrypt_config
+echo "     $1: {" >> $gtmcrypt_config
+echo "           format: \"PEM\";" >> $gtmcrypt_config
+echo "           cert: \"$PWD/certs/$1.crt\";" >> $gtmcrypt_config
+echo "           key: \"$PWD/certs/$1.key\";" >> $gtmcrypt_config
+echo "     };" >> $gtmcrypt_config
+echo "     $2: {" >> $gtmcrypt_config
+echo "           format: \"PEM\";" >> $gtmcrypt_config
+echo "           cert: \"$PWD/certs/$2.crt\";" >> $gtmcrypt_config
+echo "           key: \"$PWD/certs/$2.key\";" >> $gtmcrypt_config
+echo "     };" >> $gtmcrypt_config
+echo "};" >> $gtmcrypt_config
+cat $gtmcrypt_config

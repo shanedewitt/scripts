@@ -1,0 +1,4 @@
+#!/bin/sh
+$gtm_dist/mupip replicate -receiver -shutdown -timeout=2 #Shut down the Receiver Server
+$gtm_dist/mupip replicate -source -shutdown -timeout=2 #Shut down the passive Source Server
+

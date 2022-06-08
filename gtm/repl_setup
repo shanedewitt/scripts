@@ -1,0 +1,4 @@
+#!/bin/sh
+$gtm_dist/mupip set -replication=on -region "*"
+$gtm_dist/mupip replic -instance_create -noreplace
+

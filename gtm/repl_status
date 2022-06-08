@@ -1,0 +1,11 @@
+
+echo "-----------------------------------------------------------------"
+echo "Source Server $gtm_repl_instname: "
+echo "-----------------------------------------------------------------"
+$gtm_dist/mupip replicate -source -check
+$gtm_dist/mupip replicate -source -showbacklog 
+echo "-----------------------------------------------------------------"
+echo "Receiver Server $gtm_repl_instname: "
+echo "-----------------------------------------------------------------"
+$gtm_dist/mupip replicate -receive -check
+$gtm_dist/mupip replicate -rece -showbacklog

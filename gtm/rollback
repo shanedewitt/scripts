@@ -1,0 +1,1 @@
+$gtm_dist/mupip journal -rollback -fetchresync=$1 -$2 "*"

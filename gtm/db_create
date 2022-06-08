@@ -1,0 +1,5 @@
+mkdir -p $PWD/$gtm_repl_instname/
+$gtm_dist/mumps -r ^GDE @gdemsr
+$gtm_dist/mupip create
+
+

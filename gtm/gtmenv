@@ -1,0 +1,11 @@
+export gtm_dist=/usr/lib/fis-gtm/$2
+export gtm_repl_instname=$1
+export gtm_repl_instance=$PWD/$gtm_repl_instname/gtm.repl
+export gtmgbldir=$PWD/$gtm_repl_instname/gtm.gld
+export gtm_principal_editing=EDITING
+export gtmroutines="$PWD/$gtm_repl_instname $gtm_dist"
+export gtmroutines="$PWD/$gtm_repl_instname $gtm_dist/libgtmutil.so"
+export LD_LIBRARY_PATH=/usr/local/lib
+#export gtmcrypt_config=$PWD/$gtm_repl_instname/config_file
+#echo -n "Enter Password for gtmtls_passwd_${gtm_repl_instname}: ";export gtmtls_passwd_${gtm_repl_instname}="`$gtm_dist/plugin/gtmcrypt/maskpass|tail -n 1|cut -f 3 -d " "`"
+
