@@ -6,7 +6,9 @@ print "$cmd\n";
 system($cmd) or warn "Error: $?\n";
 sleep(2);
 
-while(<$TMP>) {
+open(TMP,"$TMP") or die "Can't open file: $TMP $!\n";
+
+while(<TMP>) {
     chomp;
     s/^\s+//; # remove leadin spaces
     next if (/^\s+$/); # skip blank lines
@@ -39,6 +41,6 @@ while(<$TMP>) {
 	print "\n";
     }
 }
-
+close (TMP);
 unlink $TMP;
 
