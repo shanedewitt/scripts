@@ -1,0 +1,11 @@
+1,mas_movement_type_id,numeric,0,0,2,,,,java.math.BigDecimal,131089,mas_movement_type_id,2,false,false,false,false,false,true,true,true
+2,name,varchar,2147483647,0,2,,,,java.lang.String,2147483647,name,12,false,true,false,false,false,true,false,true
+3,transaction_type,numeric,0,0,2,,,,java.math.BigDecimal,131089,transaction_type,2,false,false,false,false,false,true,true,true
+4,ask_specialty_at_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ask_specialty_at_movement,12,false,true,false,false,false,true,false,true
+5,ask_facility_on_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ask_facility_on_movement,12,false,true,false,false,false,true,false,true
+6,module_gen_selectable,varchar,2147483647,0,2,,,,java.lang.String,2147483647,module_gen_selectable,12,false,true,false,false,false,true,false,true
+7,ptf_discharge_code,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ptf_discharge_code,12,false,true,false,false,false,true,false,true
+8,description,varchar,2147483647,0,2,,,,java.lang.String,2147483647,description,12,false,true,false,false,false,true,false,true
+9,absence_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,absence_movement,12,false,true,false,false,false,true,false,true
+10,can_mov_foll_admission,varchar,2147483647,0,2,,,,java.lang.String,2147483647,can_mov_foll_admission,12,false,true,false,false,false,true,false,true
+11,asih_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,asih_movement,12,false,true,false,false,false,true,false,true
