@@ -1,11 +1,145 @@
-1,mas_movement_type_id,numeric,0,0,2,,,,java.math.BigDecimal,131089,mas_movement_type_id,2,false,false,false,false,false,true,true,true
-2,name,varchar,2147483647,0,2,,,,java.lang.String,2147483647,name,12,false,true,false,false,false,true,false,true
-3,transaction_type,numeric,0,0,2,,,,java.math.BigDecimal,131089,transaction_type,2,false,false,false,false,false,true,true,true
-4,ask_specialty_at_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ask_specialty_at_movement,12,false,true,false,false,false,true,false,true
-5,ask_facility_on_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ask_facility_on_movement,12,false,true,false,false,false,true,false,true
-6,module_gen_selectable,varchar,2147483647,0,2,,,,java.lang.String,2147483647,module_gen_selectable,12,false,true,false,false,false,true,false,true
-7,ptf_discharge_code,varchar,2147483647,0,2,,,,java.lang.String,2147483647,ptf_discharge_code,12,false,true,false,false,false,true,false,true
-8,description,varchar,2147483647,0,2,,,,java.lang.String,2147483647,description,12,false,true,false,false,false,true,false,true
-9,absence_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,absence_movement,12,false,true,false,false,false,true,false,true
-10,can_mov_foll_admission,varchar,2147483647,0,2,,,,java.lang.String,2147483647,can_mov_foll_admission,12,false,true,false,false,false,true,false,true
-11,asih_movement,varchar,2147483647,0,2,,,,java.lang.String,2147483647,asih_movement,12,false,true,false,false,false,true,false,true
+DROP TABLE IF EXISTS SQLI_SCHEMA;
+CREATE TABLE SQLI_SCHEMA (
+SQLI_SCHEMA_ID numeric PRIMARY KEY,
+S_NAME varchar(1),
+S_SECURITY varchar(1),
+S_DESCRIPTION varchar(1));
+DROP TABLE IF EXISTS SQLI_KEY_WORD;
+CREATE TABLE SQLI_KEY_WORD (
+SQLI_KEY_WORD_ID numeric PRIMARY KEY,
+KEY_WORD varchar(1));
+DROP TABLE IF EXISTS SQLI_DATA_TYPE;
+CREATE TABLE SQLI_DATA_TYPE (
+SQLI_DATA_TYPE_ID numeric PRIMARY KEY,
+D_NAME varchar(1),
+D_COMMENT varchar(1),
+D_OUTPUT_STRATEGY varchar(1),
+D_OUTPUT_FORMAT numeric,
+FOREIGN KEY (D_OUTPUT_FORMAT) REFERENCES SQLI_OUTPUT_FORMAT(OF_NAME));
+DROP TABLE IF EXISTS SQLI_DOMAIN;
+CREATE TABLE SQLI_DOMAIN (
+SQLI_DOMAIN_ID numeric PRIMARY KEY,
+DM_NAME varchar(1),
+DM_DATA_TYPE numeric,
+DM_COMMENT varchar(1),
+DM_TABLE numeric,
+DM_WIDTH int4,
+DM_SCALE int4,
+DM_OUTPUT_FORMAT numeric,
+DM_INT_EXPR varchar(1),
+DM_INT_EXEC varchar(1),
+DM_BASE_EXPR varchar(1),
+DM_BASE_EXEC varchar(1),
+DM_FILEMAN_FIELD_TYPE varchar(1),
+FOREIGN KEY (DM_DATA_TYPE) REFERENCES SQLI_DATA_TYPE(D_NAME),
+FOREIGN KEY (DM_TABLE) REFERENCES SQLI_TABLE(T_NAME),
+FOREIGN KEY (DM_OUTPUT_FORMAT) REFERENCES SQLI_OUTPUT_FORMAT(OF_NAME)
+);
+DROP TABLE IF EXISTS SQLI_KEY_FORMAT;
+CREATE TABLE SQLI_KEY_FORMAT (
+SQLI_KEY_FORMAT_ID numeric PRIMARY KEY,
+KF_NAME varchar(1),
+KF_DATA_TYPE numeric,
+KF_COMMENT varchar(1),
+KF_INT_EXPR varchar(1),
+KF_INT_EXEC varchar(1),
+FOREIGN KEY (KF_DATA_TYPE) REFERENCES SQLI_DATA_TYPE(D_NAME)
+);
+DROP TABLE IF EXISTS SQLI_OUTPUT_FORMAT;
+CREATE TABLE SQLI_OUTPUT_FORMAT (
+SQLI_OUTPUT_FORMAT_ID numeric PRIMARY KEY,
+OF_NAME varchar(1),
+OF_DATA_TYPE numeric,
+OF_COMMENT varchar(1),
+OF_EXT_EXPR varchar(1),
+OF_EXT_EXEC varchar(1),
+FOREIGN KEY (OF_DATA_TYPE) REFERENCES SQLI_DATA_TYPE(D_NAME)
+);
+DROP TABLE IF EXISTS SQLI_TABLE;
+CREATE TABLE SQLI_TABLE (
+SQLI_TABLE_ID numeric PRIMARY KEY,
+T_NAME varchar(1),
+T_SCHEMA numeric,
+T_COMMENT varchar(1),
+T_MASTER_TABLE numeric,
+T_VERSION_FM int4,
+T_ROW_COUNT int4,
+T_FILE numeric,
+T_UPDATE numeric,
+T_GLOBAL varchar(1),
+FOREIGN KEY (T_SCHEMA) REFERENCES SQLI_SCHEMA(S_NAME),
+FOREIGN KEY (T_MASTER_TABLE) REFERENCES SQLI_TABLE(T_NAME)
+);
+DROP TABLE IF EXISTS SQLI_TABLE_ELEMENT;
+CREATE TABLE SQLI_TABLE_ELEMENT (
+SQLI_TABLE_ELEMENT_ID numeric PRIMARY KEY,
+E_NAME varchar(1),
+E_DOMAIN numeric,
+E_TABLE numeric,
+E_TYPE varchar(1),
+E_COMMENT varchar(1),
+FOREIGN KEY (E_DOMAIN) REFERENCES SQLI_DOMAIN(DM_NAME),
+FOREIGN KEY (E_TABLE) REFERENCES SQLI_TABLE(T_NAME)
+);
+DROP TABLE IF EXISTS SQLI_COLUMN;
+CREATE TABLE SQLI_COLUMN (
+SQLI_COLUMN_ID numeric PRIMARY KEY,
+C_TABLE_ELEMENT numeric,
+C_FILE numeric,
+C_WIDTH int4,
+C_SCALE int4,
+C_FIELD numeric,
+C_NOT_NULL varchar(1),
+C_SECURE varchar(1),
+C_VIRTUAL varchar(1),
+C_PARENT numeric,
+C_GLOBAL varchar(1),
+C_PIECE int4,
+C_EXTRACT_FROM int4,
+C_EXTRACT_THRU int4,
+C_COMPUTE_EXEC varchar(1),
+C_FM_EXEC varchar(1),
+C_POINTER varchar(1),
+C_OUTPUT_FORMAT numeric,
+FOREIGN KEY (C_TABLE_ELEMENT) REFERENCES SQLI_TABLE_ELEMENT(E_NAME),
+FOREIGN KEY (C_PARENT) REFERENCES SQLI_COLUMN(C_TABLE_ELEMENT),
+FOREIGN KEY (C_OUTPUT_FORMAT) REFERENCES SQLI_OUTPUT_FORMAT(OF_NAME)
+);
+DROP TABLE IF EXISTS SQLI_PRIMARY_KEY;
+CREATE TABLE SQLI_PRIMARY_KEY (
+SQLI_PRIMARY_KEY_ID numeric PRIMARY KEY,
+P_TBL_ELEMENT numeric,
+P_COLUMN numeric,
+P_SEQUENCE int4,
+P_START_AT varchar(1),
+P_END_IF varchar(1),
+P_ROW_COUNT numeric,
+P_PRESELECT varchar(1),
+P_KEY_FORMAT numeric,
+FOREIGN KEY (P_TBL_ELEMENT) REFERENCES SQLI_TABLE_ELEMENT(E_NAME),
+FOREIGN KEY (P_COLUMN) REFERENCES SQLI_COLUMN(C_TABLE_ELEMENT),
+FOREIGN KEY (P_KEY_FORMAT) REFERENCES SQLI_KEY_FORMAT(KF_NAME)
+);
+DROP TABLE IF EXISTS SQLI_FOREIGN_KEY;
+CREATE TABLE SQLI_FOREIGN_KEY (
+SQLI_FOREIGN_KEY_ID numeric PRIMARY KEY,
+F_TBL_ELEMENT numeric,
+F_PK_ELEMENT numeric,
+F_CLM_ELEMENT numeric,
+FOREIGN KEY (F_TBL_ELEMENT) REFERENCES SQLI_TABLE_ELEMENT(E_NAME),
+FOREIGN KEY (F_PK_ELEMENT) REFERENCES SQLI_PRIMARY_KEY(P_TBL_ELEMENT),
+FOREIGN KEY (F_CLM_ELEMENT) REFERENCES SQLI_COLUMN(C_TABLE_ELEMENT)
+);
+DROP TABLE IF EXISTS SQLI_ERROR_TEXT;
+CREATE TABLE SQLI_ERROR_TEXT (
+SQLI_ERROR_TEXT_ID numeric PRIMARY KEY,
+ERROR_TEXT varchar(1));
+DROP TABLE IF EXISTS SQLI_ERROR_LOG;
+CREATE TABLE SQLI_ERROR_LOG (
+SQLI_ERROR_LOG_ID numeric PRIMARY KEY,
+FILEMAN_FILE numeric,
+FILEMAN_FIELD numeric,
+ERROR numeric,
+ERROR_DATE numeric,
+FOREIGN KEY (ERROR) REFERENCES SQLI_ERROR_TEXT(ERROR_TEXT)
+);
