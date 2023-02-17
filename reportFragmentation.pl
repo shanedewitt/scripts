@@ -1,12 +1,25 @@
 #!/usr/bin/perl -w
+#
+# This script will run a full integrity on the provided backup database file.
+# It will create a CSV report of the fragmentation percent of the globals.
+#
+use strict;
+use warnings;
+ 
+print "Which database file should I examine? ";
+my $dbname = <STDIN>;
+chomp $dbname;
+die "Database file $dnname error: $!\n" unless -f $dbfile;
 
-chomp($TMP = `mktemp -u`);
-$cmd = "mupip integ -full -nomap -region '*' > $TMP 2>&1";
-print "$cmd\n";
+chomp(my $TMP = `mktemp -u`);
+my $cmd = "mupip integ -full -nomap -file $dbfile > $TMP 2>&1";
+
+print "Running command: $cmd\n";
 system($cmd) or warn "Error: $?\n";
 sleep(2);
 
 open(TMP,"$TMP") or die "Can't open file: $TMP $!\n";
+print "Examining output file: $TMP\n";
 
 while(<TMP>) {
     chomp;
@@ -42,5 +55,5 @@ while(<TMP>) {
     }
 }
 close (TMP);
+sleep(2);
 unlink $TMP;
-
