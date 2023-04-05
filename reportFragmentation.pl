@@ -5,11 +5,11 @@
 #
 use strict;
 use warnings;
- 
+
 print "Which database file should I examine? ";
-my $dbname = <STDIN>;
-chomp $dbname;
-die "Database file $dnname error: $!\n" unless -f $dbfile;
+my $dbfile = <STDIN>;
+chomp $dbfile;
+die "Database file $dbfile error: $!\n" unless -f $dbfile;
 
 chomp(my $TMP = `mktemp -u`);
 my $cmd = "mupip integ -full -nomap -file $dbfile > $TMP 2>&1";
@@ -29,12 +29,12 @@ while(<TMP>) {
 	print $_, "\n";
 	print "Global Variable,None-Adjacent Blocks,Total Blocks,Fragmentation %", "\n";
 	next;
-    } 
+    }
     if (/Global variable (.*)/) { print"$1"; }
     if (/^0/) {
-	@pieces = ();
+	my @pieces = ();
 	@pieces = split;
-	$fragPercent = "Unknown";
+	my $fragPercent = "Unknown";
 	if($pieces[4] eq "NA") { next; }
 	else {
 	    $fragPercent = 100-100*$pieces[4]/$pieces[1];
