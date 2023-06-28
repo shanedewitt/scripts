@@ -1,10 +1,17 @@
 #!/usr/bin/perl
-
-# Send SQL queries to Rocto
+#
+# Read SQL query from disk and
+# send SQL queries to Rocto
+#
 
 use DBI;
 use IO::Prompter;
 use strict;
+
+my $sql = chomp($ARGV[0]);
+print "SQL file is: " . $sql . "\n";
+die "Invalid SQL file\n" unless ($sql =~/.*sql/);
+die "File error: " unless -f $sql;
 
 my $user = "OctoUser";
 my $pass = "OctoPass";
@@ -52,5 +59,3 @@ $dbh->disconnect();
 if($user = "") {
   open(DELUSER, "| $del_user") || die "Failed to delete user: $! \n";
 }
-
-
